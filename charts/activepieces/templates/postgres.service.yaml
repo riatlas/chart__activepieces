@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: '{{ .Release.Name }}-postgres'
+  labels:
+    katenary.io/component: postgres
+    katenary.io/project: '{{ .Chart.Name }}'
+    katenary.io/release: '{{ .Release.Name }}'
+  annotations:
+    katenary.io/docker-compose-sha1: 403bf1804b7c96915dbd282860506a6255f9b5c5
+    katenary.io/version: 2.0.0-beta2
+spec:
+  selector:
+    katenary.io/component: postgres
+    katenary.io/release: '{{ .Release.Name }}'
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
