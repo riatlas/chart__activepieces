@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  activepieces:
+  - apiVersion: v2
+    appVersion: main-54c45cefd
+    created: "2024-03-01T23:52:18.98334963Z"
+    description: A helm chart for activepieces
+    digest: 708e98a9a119f2018a5bfcd1167eaccfdd25369b6602b611a7a045b800a7e3e9
+    name: activepieces
+    type: application
+    urls:
+    - https://github.com/riatlas/chart__activepieces/releases/download/activepieces-1.0.0/activepieces-1.0.0.tgz
+    version: 1.0.0
+generated: "2024-03-01T23:52:18.98336038Z"
