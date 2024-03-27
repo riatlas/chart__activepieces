@@ -52,92 +52,15 @@ spec:
               echo "Done"
       containers:
         - name: app
-          image: '{{ .Values.app.repository.image }}{{ if ne .Values.app.repository.tag "" }}:{{ .Values.app.repository.tag }}{{ end }}'
-          env:
-            {{- with .Values.app.environment.AP_CACHE_PATH }}
-            - name: AP_CACHE_PATH
-              value: '{{ tpl . $ }}'
-            {{- end }}
+          image: '{{ .Values.app.repository.image }}{{ if ne .Values.app.repository.tag "" }}:{{ .Values.app.repository.tag | default .Chart.AppVersion }}{{ end }}'
+                   
+          envFrom:
+          - configMapRef:
+              name: {{ $.Release.Name }}-app-envs
+          - secretRef: 
+              name: {{ $.Release.Name }}-app-secrets
+          
 
-             {{- with .Values.app.environment.AP_ENCRYPTION_KEY }}
-            - name: AP_ENCRYPTION_KEY
-              value: '{{ tpl . $ }}'
-            {{- end }}
-
-            {{- with .Values.app.environment.AP_SIGN_UP_ENABLED }}
-            - name: AP_SIGN_UP_ENABLED
-              value: '{{ tpl . $ }}'
-            {{- end }}
-
-            {{- with .Values.app.environment.AP_REDIS_HOST }}
-            - name: AP_REDIS_HOST
-              value: '{{ tpl . $ }}'
-            {{- end }}
-
-            {{- with .Values.app.environment.AP_PACKAGE_ARCHIVE_PATH }}
-            - name: AP_PACKAGE_ARCHIVE_PATH
-              value: '{{ tpl . $ }}'
-            {{- end }}
-
-            {{- with .Values.app.environment.AP_POSTGRES_PASSWORD }}
-            - name: AP_POSTGRES_PASSWORD
-              value: '{{ tpl . $ }}'
-            {{- end }}
-
-            {{- with .Values.app.environment.AP_QUEUE_MODE }}
-            - name: AP_QUEUE_MODE
-              value: '{{ tpl . $ }}'
-            {{- end }}
-
-            {{- with .Values.app.environment.AP_POSTGRES_HOST }}
-            - name: AP_POSTGRES_HOST
-              value: '{{ tpl . $ }}'
-            {{- end }}
-
-            {{- with .Values.app.environment.AP_DB_TYPE }}
-            - name: AP_DB_TYPE
-              value: '{{ tpl . $ }}'
-            {{- end }}
-
-            {{- with .Values.app.environment.AP_REDIS_PORT }}
-            - name: AP_REDIS_PORT
-              value: '{{ tpl . $ }}'
-            {{- end }}
-
-            {{- with .Values.app.environment.AP_POSTGRES_USERNAME }}
-            - name: AP_POSTGRES_USERNAME
-              value: '{{ tpl . $ }}'
-            {{- end }}
-
-            {{- with .Values.app.environment.AP_EXECUTION_MODE }}
-            - name: AP_EXECUTION_MODE
-              value: '{{ tpl . $ }}'
-            {{- end }}
-
-            {{- with .Values.app.environment.AP_POSTGRES_DATABASE }}
-            - name: AP_POSTGRES_DATABASE
-              value: '{{ tpl . $ }}'
-            {{- end }}
-
-            {{- with .Values.app.environment.AP_JWT_SECRET }}
-            - name: AP_JWT_SECRET
-              value: '{{ tpl . $ }}'
-            {{- end }}
-
-            {{- with .Values.app.environment.AP_ENVIRONMENT }}
-            - name: AP_ENVIRONMENT
-              value: '{{ tpl . $ }}'
-            {{- end }}
-
-            {{- with .Values.app.environment.AP_POSTGRES_PORT }}
-            - name: AP_POSTGRES_PORT
-              value: '{{ tpl . $ }}'
-            {{- end }}
-
-            {{- with .Values.app.environment.AP_FRONTEND_URL }}
-            - name: AP_FRONTEND_URL
-              value: '{{ tpl . $ }}'
-            {{- end }}
 
             
 

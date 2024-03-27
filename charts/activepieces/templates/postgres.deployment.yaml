@@ -28,22 +28,22 @@ spec:
             - name: postgres
               containerPort: 5432
           env:
-            - name: POSTGRES_PASSWORD
-              value: '{{ tpl .Values.postgres.environment.POSTGRES_PASSWORD . }}'
-            - name: POSTGRES_DB
-              value: '{{ tpl .Values.postgres.environment.POSTGRES_DB . }}'
-            - name: POSTGRES_USER
-              value: '{{ tpl .Values.postgres.environment.POSTGRES_USER . }}'
             - name: PGDATA
-              value: /var/lib/postgresql/data/pgdata
+              value: "/var/lib/postgresql/data/pgdata"      
+          envFrom:
+          - configMapRef:
+              name: {{ .Release.Name }}-postgresql-envs
+          - secretRef: 
+              name: {{ $.Release.Name }}-postgresql-secrets
+          
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
-              name: postgresdatadev
+              name: postgres-data
       volumes:
-        - name: postgresdatadev
-          {{- if  .Values.postgres.persistence.postgresdatadev.enabled }}
+        - name: postgres-data
+          {{- if  .Values.postgres.persistence.enabled }}
           persistentVolumeClaim:
-            claimName: '{{ .Release.Name }}-postgresdatadev'
+            claimName: '{{ .Release.Name }}-postgres-data'
           {{ else }}
           emptyDir: {}
           {{- end }}

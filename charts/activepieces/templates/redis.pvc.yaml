@@ -1,12 +1,12 @@
-{{ if .Values.postgres.persistence.postgresdatadev.enabled }}
+{{ if .Values.redis.persistence.enabled }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: '{{ .Release.Name }}-postgresdatadev'
+  name: '{{ .Release.Name }}-redis-data'
   labels:
-    katenary.io/component: postgres
+    katenary.io/component: redis
     katenary.io/project: '{{ .Chart.Name }}'
-    katenary.io/pvc-name: postgresdatadev
+    katenary.io/pvc-name: redisdatadev
     katenary.io/release: '{{ .Release.Name }}'
   annotations:
     katenary.io/docker-compose-sha1: 403bf1804b7c96915dbd282860506a6255f9b5c5
@@ -15,7 +15,7 @@ metadata:
 spec:
   resources:
     requests:
-      storage: '{{ .Values.postgres.persistence.postgresdatadev.capacity }}'
+      storage: '{{ .Values.redis.persistence.capacity }}'
   accessModes:
     - ReadWriteOnce
 {{- end -}}

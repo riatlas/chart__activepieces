@@ -29,12 +29,12 @@ spec:
               containerPort: 6379
           volumeMounts:
             - mountPath: /data
-              name: redisdatadev
+              name: redis-data
       volumes:
-        - name: redisdatadev
-          {{- if  .Values.redis.persistence.redisdatadev.enabled }}
+        - name: redis-data
+          {{- if  .Values.redis.persistence.enabled }}
           persistentVolumeClaim:
-            claimName: '{{ .Release.Name }}-redisdatadev'
+            claimName: '{{ .Release.Name }}-redis-data'
           {{ else }}
           emptyDir: {}
           {{- end }}

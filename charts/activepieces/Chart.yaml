@@ -1,8 +1,8 @@
 # Create on 2024-03-01T12:55:33+01:00
 # Katenary command line: katenary convert -n activepieces -c docker-compose.env.yml --force
 apiVersion: v2
-appVersion: main-54c45cefd
+appVersion: latest
 description: A helm chart for activepieces
 name: activepieces
 type: application
-version: 1.0.0
+version: 1.1.0

@@ -1,0 +1,29 @@
+{{ if .Values.app.ingress.enabled  }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: '{{ .Release.Name }}-ingress'
+{{- with .Values.app.ingress }}
+  {{- with .annotations  }}
+  annotations:
+  {{- . | toYaml | nindent 8 }}
+    {{- end }}
+spec:
+  {{- with .tls }}
+  tls:
+  {{- . | toYaml | nindent 4 }}
+  {{- end }}
+  rules:
+  - host: "{{ .host }}"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: '{{ $.Release.Name }}-app'
+            port:
+              number: 8080  
+
+{{- end }}
+{{- end }}
